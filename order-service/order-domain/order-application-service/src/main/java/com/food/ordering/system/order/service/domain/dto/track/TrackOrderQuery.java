@@ -13,5 +13,5 @@ import java.util.UUID;
 public class TrackOrderQuery {
 
     @NotNull
-    private final UUID orderTRackingId;
+    private final UUID orderTrackingId;
 }

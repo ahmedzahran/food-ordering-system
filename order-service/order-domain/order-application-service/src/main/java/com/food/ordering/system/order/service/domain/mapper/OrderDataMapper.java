@@ -7,11 +7,13 @@ import com.food.ordering.system.domain.valueobject.RestaurantId;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.food.ordering.system.order.service.domain.dto.create.OrderAddress;
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse;
 import com.food.ordering.system.order.service.domain.entity.Order;
 import com.food.ordering.system.order.service.domain.entity.OrderItem;
 import com.food.ordering.system.order.service.domain.entity.Product;
 import com.food.ordering.system.order.service.domain.entity.Restaurant;
 import com.food.ordering.system.order.service.domain.valueobject.StreetAddress;
+import com.food.ordering.system.order.service.domain.valueobject.TrackingId;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.stereotype.Component;
 
@@ -23,10 +25,18 @@ import java.util.stream.Collectors;
 public class OrderDataMapper {
 
 
-    public CreateOrderResponse orderToCreateOrderResponse(Order order){
-        CreateOrderResponse.builder()
+    public TrackOrderResponse orderToTrackOrderResponse(Order order){
+        return TrackOrderResponse.builder()
                 .orderStatus(order.getOrderStatus())
                 .orderTrackingId(order.getTrackingId().getValue())
+                .failureMessages(order.getFailureMessages())
+                .build();
+    }
+    public CreateOrderResponse orderToCreateOrderResponse(Order order,String message){
+        return CreateOrderResponse.builder()
+                .orderStatus(order.getOrderStatus())
+                .orderTrackingId(order.getTrackingId().getValue())
+                .message(message)
                 .build();
     }
     public Restaurant createOrderCommandToRestaurant(CreateOrderCommand createOrderCommand){

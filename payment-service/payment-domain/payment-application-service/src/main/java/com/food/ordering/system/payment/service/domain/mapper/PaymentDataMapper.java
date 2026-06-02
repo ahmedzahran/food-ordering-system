@@ -4,9 +4,8 @@ import com.food.ordering.system.domain.valueobject.CustomerId;
 import com.food.ordering.system.domain.valueobject.Money;
 import com.food.ordering.system.domain.valueobject.OrderId;
 import com.food.ordering.system.payment.service.domain.dto.PaymentRequest;
-import com.food.ordering.system.paymet.service.domain.entity.Payment;
-import com.food.ordering.system.paymet.service.domain.valueobject.PaymentId;
-import org.springframework.context.annotation.Configuration;
+import com.food.ordering.system.payment.service.domain.entity.Payment;
+import com.food.ordering.system.payment.service.domain.valueobject.PaymentId;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;

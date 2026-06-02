@@ -2,7 +2,7 @@ package com.food.ordering.system.payment.service.domain;
 
 import com.food.ordering.system.payment.service.domain.dto.PaymentRequest;
 import com.food.ordering.system.payment.service.domain.ports.input.message.listener.PaymentRequestMessageListener;
-import com.food.ordering.system.paymet.service.domain.event.PaymentEvent;
+import com.food.ordering.system.payment.service.domain.event.PaymentEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

@@ -5,13 +5,9 @@ import com.food.ordering.system.kafka.producer.service.KafkaProducer;
 import com.food.ordering.system.order.service.domain.config.OrderServiceConfigData;
 import com.food.ordering.system.order.service.domain.event.OrderCancelledEvent;
 import com.food.ordering.system.order.service.domain.ports.output.message.publisher.payment.OrderCancelledPaymentRequestMessagePublisher;
-import com.food.ordering.system.order.service.domain.ports.output.message.publisher.payment.OrderCreatedPaymentRequestMessagePublisher;
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
-
-import java.util.function.BiConsumer;
 
 @Component
 @Slf4j

@@ -1,0 +1,19 @@
+server:
+  port: 8184
+spring:
+  jpa:
+    open-in-view: false
+    show-sql: false
+    properties:
+      hibernate:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=customer&binaryTransfer=true&reWriteBatchedInserts=true
+    username: postgres
+    password: 123
+    driver-class-name: org.postgresql.Driver
+  sql:
+    init:
+      platform: postgres
+      data-locations: classpath:init-data.sql
+      mode: always
+      schema-locations: classpath:init-schema.sql

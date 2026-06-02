@@ -2,7 +2,7 @@ package com.food.ordering.system.order.service.messaging.listener.kafka;
 
 import com.food.ordering.system.kafka.consumer.KafkaConsumer;
 import com.food.ordering.system.kafka.order.avro.model.OrderApprovalStatus;
-import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalResponseModel;
+import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalResponseAvroModel;
 import com.food.ordering.system.order.service.domain.ports.input.message.listener.restaurant.RestaurantApprovalResponseMessageListener;
 import com.food.ordering.system.order.service.messaging.mapper.OrderMessagingDataMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ import static com.food.ordering.system.order.service.domain.entity.Order.FAILURE
 
 @Component
 @Slf4j
-public class RestaurantApprovalResponseKafkaListener implements KafkaConsumer<RestaurantApprovalResponseModel> {
+public class RestaurantApprovalResponseKafkaListener implements KafkaConsumer<RestaurantApprovalResponseAvroModel> {
 
     private final RestaurantApprovalResponseMessageListener restaurantApprovalResponseMessageListener;
     private final OrderMessagingDataMapper orderMessagingDataMapper;
@@ -30,8 +30,8 @@ public class RestaurantApprovalResponseKafkaListener implements KafkaConsumer<Re
 
 
     @Override
-    @KafkaListener(id =  "${kafka-consumer-config.restaurant-approval-consumer-group-id}",topics = "${order-service.restauran-approval-response-topic-name}")
-    public void receive(@Payload List<RestaurantApprovalResponseModel> messages,
+    @KafkaListener(id =  "${kafka-consumer-config.restaurant-approval-consumer-group-id}",topics = "${order-service.restaurant-approval-response-topic-name}")
+    public void receive(@Payload List<RestaurantApprovalResponseAvroModel> messages,
                         @Header(KafkaHeaders.RECEIVED_KEY) List<String> keys,
                         @Header(KafkaHeaders.RECEIVED_PARTITION)  List<Integer> partitions,
                         @Header(KafkaHeaders.OFFSET) List<Long> offsets

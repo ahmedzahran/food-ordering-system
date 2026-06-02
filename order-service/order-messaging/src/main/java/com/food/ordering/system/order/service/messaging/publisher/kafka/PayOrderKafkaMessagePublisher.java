@@ -1,7 +1,6 @@
 package com.food.ordering.system.order.service.messaging.publisher.kafka;
 
-import com.food.ordering.system.kafka.order.avro.model.PaymentRequestAvroModel;
-import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestModel;
+import com.food.ordering.system.kafka.order.avro.model.RestaurantApprovalRequestAvroModel;
 import com.food.ordering.system.kafka.producer.service.KafkaProducer;
 import com.food.ordering.system.order.service.domain.config.OrderServiceConfigData;
 import com.food.ordering.system.order.service.domain.event.OrderPaidEvent;
@@ -16,10 +15,10 @@ public class PayOrderKafkaMessagePublisher implements OrderPaidRestaurantRequest
 
     private final OrderMessagingDataMapper orderMessagingDataMapper;
     private final OrderServiceConfigData orderServiceConfigData;
-    private final KafkaProducer<String, RestaurantApprovalRequestModel> kafkaProducer;
+    private final KafkaProducer<String, RestaurantApprovalRequestAvroModel> kafkaProducer;
     private final OrderKafkaMessageHelper orderKafkaMessageHelper;
 
-    public PayOrderKafkaMessagePublisher(OrderMessagingDataMapper orderMessagingDataMapper, OrderServiceConfigData orderServiceConfigData, KafkaProducer<String, RestaurantApprovalRequestModel> kafkaProducer, OrderKafkaMessageHelper orderKafkaMessageHelper) {
+    public PayOrderKafkaMessagePublisher(OrderMessagingDataMapper orderMessagingDataMapper, OrderServiceConfigData orderServiceConfigData, KafkaProducer<String, RestaurantApprovalRequestAvroModel> kafkaProducer, OrderKafkaMessageHelper orderKafkaMessageHelper) {
         this.orderMessagingDataMapper = orderMessagingDataMapper;
         this.orderServiceConfigData = orderServiceConfigData;
         this.kafkaProducer = kafkaProducer;
@@ -32,7 +31,7 @@ public class PayOrderKafkaMessagePublisher implements OrderPaidRestaurantRequest
         String orderId = domainEvent.getOrder().getId().getValue().toString();
 
         try {
-            RestaurantApprovalRequestModel restaurantApprovalRequestModel = orderMessagingDataMapper.orderPaidEventToRestaurantApprovalRequestModel(domainEvent);
+            RestaurantApprovalRequestAvroModel restaurantApprovalRequestModel = orderMessagingDataMapper.orderPaidEventToRestaurantApprovalRequestModel(domainEvent);
 
             kafkaProducer.send(
                     orderServiceConfigData.getRestaurantApprovalRequestTopicName(),
@@ -41,7 +40,7 @@ public class PayOrderKafkaMessagePublisher implements OrderPaidRestaurantRequest
                     orderKafkaMessageHelper.getKafkaCallback(
                             orderServiceConfigData.getRestaurantApprovalRequestTopicName(),
                             orderId,
-                            RestaurantApprovalRequestModel.class.getSimpleName()
+                            RestaurantApprovalRequestAvroModel.class.getSimpleName()
                     )
             );
 

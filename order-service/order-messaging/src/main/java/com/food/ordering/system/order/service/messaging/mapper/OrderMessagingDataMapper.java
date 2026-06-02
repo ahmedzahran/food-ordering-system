@@ -44,10 +44,10 @@ public class OrderMessagingDataMapper {
                 .build();
     }
 
-    public RestaurantApprovalRequestModel orderPaidEventToRestaurantApprovalRequestModel(OrderPaidEvent orderPaidEvent){
+    public RestaurantApprovalRequestAvroModel orderPaidEventToRestaurantApprovalRequestModel(OrderPaidEvent orderPaidEvent){
         Order order = orderPaidEvent.getOrder();
 
-        return RestaurantApprovalRequestModel.newBuilder()
+        return RestaurantApprovalRequestAvroModel.newBuilder()
                 .setId(UUID.randomUUID().toString())
                 .setSagaId("")
                 .setOrderId(order.getId().getValue().toString())
@@ -82,7 +82,7 @@ public class OrderMessagingDataMapper {
     }
 
 
-    public RestaurantApprovalResponse approvalResponseAvroModelToRestaurantApprovalResponse(RestaurantApprovalResponseModel restaurantApprovalResponseAvroModel){
+    public RestaurantApprovalResponse approvalResponseAvroModelToRestaurantApprovalResponse(RestaurantApprovalResponseAvroModel restaurantApprovalResponseAvroModel){
 
 
         return RestaurantApprovalResponse.builder()

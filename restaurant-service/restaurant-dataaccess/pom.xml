@@ -5,20 +5,20 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>com.food.ordering.system</groupId>
-        <artifactId>order-service</artifactId>
+        <artifactId>restaurant-service</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>order-dataacess</artifactId>
-
-    <properties>
-
-    </properties>
-
+    <artifactId>restaurant-dataaccess</artifactId>
     <dependencies>
         <dependency>
             <groupId>com.food.ordering.system</groupId>
-            <artifactId>order-application-service</artifactId>
+            <artifactId>restaurant-application-service</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
             <groupId>com.food.ordering.system</groupId>
@@ -26,13 +26,9 @@
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
         </dependency>
     </dependencies>
+
 </project>

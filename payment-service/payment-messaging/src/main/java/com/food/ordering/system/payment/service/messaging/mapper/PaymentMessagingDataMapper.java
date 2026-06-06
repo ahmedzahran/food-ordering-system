@@ -8,6 +8,7 @@ import com.food.ordering.system.payment.service.domain.event.PaymentCancelledEve
 import com.food.ordering.system.payment.service.domain.event.PaymentCompletedEvent;
 import com.food.ordering.system.payment.service.domain.event.PaymentFailedEvent;
 import org.springframework.stereotype.Component;
+import com.food.ordering.system.kafka.order.avro.model.PaymentStatus;
 
 import java.util.UUID;
 
@@ -25,6 +26,7 @@ public class PaymentMessagingDataMapper {
                 .setOrderId(paymentCompletedEvent.getPayment().getOrderId().getValue().toString())
                 .setPrice(paymentCompletedEvent.getPayment().getPrice().getAmount())
                 .setCreatedAt(paymentCompletedEvent.getCreatedAt().toInstant())
+                .setPaymentStatus(PaymentStatus.valueOf(paymentCompletedEvent.getPayment().getPaymentStatus().name()))
                 .setFailureMessages(paymentCompletedEvent.getFailureMessages())
                 .build();
     }
@@ -39,6 +41,7 @@ public class PaymentMessagingDataMapper {
                 .setOrderId(paymentCancelledEvent.getPayment().getOrderId().getValue().toString())
                 .setPrice(paymentCancelledEvent.getPayment().getPrice().getAmount())
                 .setCreatedAt(paymentCancelledEvent.getCreatedAt().toInstant())
+                .setPaymentStatus(PaymentStatus.valueOf(paymentCancelledEvent.getPayment().getPaymentStatus().name()))
                 .setFailureMessages(paymentCancelledEvent.getFailureMessages())
                 .build();
     }
@@ -54,6 +57,7 @@ public class PaymentMessagingDataMapper {
                 .setOrderId(paymentFailedEvent.getPayment().getOrderId().getValue().toString())
                 .setPrice(paymentFailedEvent.getPayment().getPrice().getAmount())
                 .setCreatedAt(paymentFailedEvent.getCreatedAt().toInstant())
+                .setPaymentStatus(PaymentStatus.valueOf(paymentFailedEvent.getPayment().getPaymentStatus().name()))
                 .setFailureMessages(paymentFailedEvent.getFailureMessages())
                 .build();
     }
@@ -66,6 +70,7 @@ public class PaymentMessagingDataMapper {
                 .customerId(paymentRequestAvroModel.getCustomerId())
                 .orderId(paymentRequestAvroModel.getOrderId())
                 .createdAt(paymentRequestAvroModel.getCreatedAt())
+                .price(paymentRequestAvroModel.getPrice())
                 .paymentOrderStatus(PaymentOrderStatus.valueOf(paymentRequestAvroModel.getPaymentOrderStatus().name()))
                 .build();
     }

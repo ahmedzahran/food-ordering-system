@@ -36,6 +36,7 @@ public class RestaurantDomainServiceImpl implements RestaurantDomainService{
                     orderApprovedEventDomainEventPublisher);
         }else{
             log.info("order is rejected for order with id : {} ",restaurant.getId().getValue());
+            restaurant.constructOrderApproval(OrderApprovalStatus.REJECTED);
             return new OrderRejectedEvent(restaurant.getOrderApproval(),
                     restaurant.getId(),
                     failureMessages,

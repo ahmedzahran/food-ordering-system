@@ -13,7 +13,7 @@ public class CreditHistory extends BaseEntity<CreditHistoryId> {
     private final TransactionType transactionType;
 
     private CreditHistory(Builder builder) {
-        super.setId(builder().creditHistoryId);
+        super.setId(builder.creditHistoryId);
         customerId = builder.customerId;
         amount = builder.amount;
         transactionType = builder.transactionType;

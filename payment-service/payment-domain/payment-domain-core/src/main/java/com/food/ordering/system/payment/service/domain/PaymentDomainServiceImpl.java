@@ -25,29 +25,58 @@ import static com.food.ordering.system.domain.DomainConstants.UTC;
 public class PaymentDomainServiceImpl implements PaymentDomainService{
 
 
-    @Override
-    public PaymentEvent validateAndInitiatePayment(Payment payment, CreditEntry creditEntry, List<CreditHistory> creditHistories, List<String> failureMessages, DomainEventPublisher<PaymentCompletedEvent> paymentCompletedEventDomainEventPublisher, DomainEventPublisher<PaymentFailedEvent> paymentFailedEventDomainEventPublisher) {
+//    @Override
+//    public PaymentEvent validateAndInitiatePayment(Payment payment, CreditEntry creditEntry, List<CreditHistory> creditHistories, List<String> failureMessages, DomainEventPublisher<PaymentCompletedEvent> paymentCompletedEventDomainEventPublisher, DomainEventPublisher<PaymentFailedEvent> paymentFailedEventDomainEventPublisher) {
+//
+//        payment.validatePayment(failureMessages);
+//        payment.initializePayment();
+//
+//        validateCreditEntry(payment,creditEntry,failureMessages);
+//
+//        subtractCreditEntry(payment,creditEntry);
+//        updateCreditHistory(payment,creditHistories, TransactionType.CREDIT);
+//        validateCreditHistory(creditEntry,creditHistories,failureMessages);
+//
+//        if ( failureMessages.isEmpty()){
+//            log.info("payment initated for order with id : {} ", payment.getOrderId().getValue());
+//            payment.updateStatus(PaymentStatus.COMPLETED);
+//
+//            return new PaymentCompletedEvent(payment, ZonedDateTime.now(ZoneId.of(UTC)),paymentCompletedEventDomainEventPublisher);
+//        }else {
+//            log.error("Payment initation is failed for order with id  : {} ", payment.getOrderId().getValue());
+//            payment.updateStatus(PaymentStatus.FAILED);
+//            return new PaymentFailedEvent(payment,ZonedDateTime.now(ZoneId.of(UTC)),failureMessages,paymentFailedEventDomainEventPublisher);
+//        }
+//
+//    }
 
+    @Override
+    public PaymentEvent validateAndInitiatePayment(Payment payment,
+                                                   CreditEntry creditEntry,
+                                                   List<CreditHistory> creditHistories,
+                                                   List<String> failureMessages,
+                                                   DomainEventPublisher<PaymentCompletedEvent>
+                                                           paymentCompletedEventDomainEventPublisher,
+                                                   DomainEventPublisher<PaymentFailedEvent>
+                                                           paymentFailedEventDomainEventPublisher) {
         payment.validatePayment(failureMessages);
         payment.initializePayment();
+        validateCreditEntry(payment, creditEntry, failureMessages);
+        subtractCreditEntry(payment, creditEntry);
+        updateCreditHistory(payment, creditHistories, TransactionType.DEBIT);
+        validateCreditHistory(creditEntry, creditHistories, failureMessages);
 
-        validateCreditEntry(payment,creditEntry,failureMessages);
-
-        subtractCreditEntry(payment,creditEntry);
-        updateCreditHistory(payment,creditHistories, TransactionType.CREDIT);
-        validateCreditHistory(creditEntry,creditHistories,failureMessages);
-
-        if ( failureMessages.isEmpty()){
-            log.info("payment initated for order with id : {} ", payment.getOrderId().getValue());
+        if (failureMessages.isEmpty()) {
+            log.info("Payment is initiated for order id: {}", payment.getOrderId().getValue());
             payment.updateStatus(PaymentStatus.COMPLETED);
-
-            return new PaymentCompletedEvent(payment, ZonedDateTime.now(ZoneId.of(UTC)),paymentCompletedEventDomainEventPublisher);
-        }else {
-            log.error("Payment initation is failed for order with id  : {} ", payment.getOrderId().getValue());
+            return new PaymentCompletedEvent(payment, ZonedDateTime.now(ZoneId.of(UTC)),
+                    paymentCompletedEventDomainEventPublisher);
+        } else {
+            log.info("Payment initiation is failed for order id: {}", payment.getOrderId().getValue());
             payment.updateStatus(PaymentStatus.FAILED);
-            return new PaymentFailedEvent(payment,ZonedDateTime.now(ZoneId.of(UTC)),failureMessages,paymentFailedEventDomainEventPublisher);
+            return new PaymentFailedEvent(payment, ZonedDateTime.now(ZoneId.of(UTC)), failureMessages,
+                    paymentFailedEventDomainEventPublisher);
         }
-
     }
 
 

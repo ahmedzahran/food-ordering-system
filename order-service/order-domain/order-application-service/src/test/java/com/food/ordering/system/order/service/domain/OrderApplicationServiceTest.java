@@ -144,7 +144,7 @@ public class OrderApplicationServiceTest {
                         .build()))
                 .build();
 
-        Customer customer = new Customer();
+        Customer customer = new Customer(new CustomerId(CUSTOMER_ID));
         customer.setId(new CustomerId(CUSTOMER_ID));
 
         Restaurant restaurantResponse =  Restaurant.builder()
